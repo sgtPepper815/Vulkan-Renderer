@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shader/triangle.frag.spv</file>
+        <file>shader/triangle.vert.spv</file>
+        <file>models/helmet.obj</file>
+    </qresource>
+</RCC>
