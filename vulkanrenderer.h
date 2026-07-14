@@ -15,6 +15,8 @@ struct Vertex {
 class VulkanRenderer : public QVulkanWindowRenderer
 {
 public:
+    enum class RenderMode { Wireframe, Lit, Textured };
+
     explicit VulkanRenderer(QVulkanWindow* window);
 
     void initResources() override;
@@ -26,6 +28,8 @@ public:
     // mouse
     void setRotation(float yaw, float pitch) {QMutexLocker lock(&m_mutex); m_yaw = yaw; m_pitch = pitch; }
     void setPan(float panX, float panY) { QMutexLocker lock(&m_mutex); m_panX = panX; m_panY = panY; }
+
+    void setRenderMode(RenderMode mode) { QMutexLocker lock(&m_mutex); m_renderMode = mode; }
 
     void loadMesh(const QString& path);
     void loadTexture(const QString& path);
@@ -44,6 +48,7 @@ private:
     QVulkanWindow* m_window;
 
     VkPipeline m_pipeline = VK_NULL_HANDLE;
+    VkPipeline m_wireframePipeline = VK_NULL_HANDLE;
     VkPipelineLayout m_pipelineLayout = VK_NULL_HANDLE;
 
     // Vertex Buffer
@@ -79,6 +84,8 @@ private:
     // Pan (rechte Maustaste) — Offset entlang der Kamera-Rechts-/Auf-Achse
     float m_panX = 0.0f;
     float m_panY = 0.0f;
+
+    RenderMode m_renderMode = RenderMode::Textured;
 
     void* m_uniformBufferMapped = nullptr;
 

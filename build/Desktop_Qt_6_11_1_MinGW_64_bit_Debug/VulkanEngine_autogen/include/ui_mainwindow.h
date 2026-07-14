@@ -30,9 +30,10 @@ public:
     QWidget *sidebar;
     QVBoxLayout *sidebarLayout;
     QPushButton *loadMeshBtn;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton;
     QSpacerItem *sidebarSpacer;
+    QPushButton *wireframeBtn;
+    QPushButton *litBtn;
+    QPushButton *texturedBtn;
     QWidget *renderView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -64,19 +65,28 @@ public:
 
         sidebarLayout->addWidget(loadMeshBtn);
 
-        pushButton_2 = new QPushButton(sidebar);
-        pushButton_2->setObjectName("pushButton_2");
-
-        sidebarLayout->addWidget(pushButton_2);
-
-        pushButton = new QPushButton(sidebar);
-        pushButton->setObjectName("pushButton");
-
-        sidebarLayout->addWidget(pushButton);
-
         sidebarSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         sidebarLayout->addItem(sidebarSpacer);
+
+        wireframeBtn = new QPushButton(sidebar);
+        wireframeBtn->setObjectName("wireframeBtn");
+        wireframeBtn->setCheckable(true);
+
+        sidebarLayout->addWidget(wireframeBtn);
+
+        litBtn = new QPushButton(sidebar);
+        litBtn->setObjectName("litBtn");
+        litBtn->setCheckable(true);
+
+        sidebarLayout->addWidget(litBtn);
+
+        texturedBtn = new QPushButton(sidebar);
+        texturedBtn->setObjectName("texturedBtn");
+        texturedBtn->setCheckable(true);
+        texturedBtn->setChecked(true);
+
+        sidebarLayout->addWidget(texturedBtn);
 
 
         mainLayout->addWidget(sidebar);
@@ -94,7 +104,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 900, 21));
+        menubar->setGeometry(QRect(0, 0, 900, 26));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -109,8 +119,9 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Engine", nullptr));
         loadMeshBtn->setText(QCoreApplication::translate("MainWindow", "Load Mesh", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
+        wireframeBtn->setText(QCoreApplication::translate("MainWindow", "Wireframe", nullptr));
+        litBtn->setText(QCoreApplication::translate("MainWindow", "Lit", nullptr));
+        texturedBtn->setText(QCoreApplication::translate("MainWindow", "Textured", nullptr));
     } // retranslateUi
 
 };

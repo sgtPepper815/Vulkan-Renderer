@@ -8,6 +8,10 @@ layout(location = 0) out vec4 outColor;
 
 layout(binding = 1) uniform sampler2D texSampler;
 
+layout(push_constant) uniform MaterialPushConstant {
+    int useTexture;
+} pc;
+
 void main() {
     vec3 lightDir = normalize(vec3(1.0, 2.0, 3.0));
     vec3 normal   = normalize(fragNormal);
@@ -20,8 +24,8 @@ void main() {
     vec3  halfDir  = normalize(lightDir + viewDir);
     float specular = pow(max(dot(normal, halfDir), 0.0), 32.0);
 
-    vec3 texColor = texture(texSampler, fragUv).rgb;
-    vec3 result = texColor * (ambient + diffuse) + vec3(1.0) * specular * 0.5;
+    vec3 albedo = (pc.useTexture != 0) ? texture(texSampler, fragUv).rgb : vec3(0.6);
+    vec3 result = albedo * (ambient + diffuse) + vec3(1.0) * specular * 0.5;
 
     outColor = vec4(result, 1.0);
 }

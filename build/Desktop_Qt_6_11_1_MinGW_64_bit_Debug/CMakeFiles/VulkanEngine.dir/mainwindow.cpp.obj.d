@@ -521,6 +521,8 @@ CMakeFiles/VulkanEngine.dir/mainwindow.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qtimezone.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qdialog.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/QFileInfo \
+ C:/Qt/6.11.1/mingw_64/include/QtWidgets/QButtonGroup \
+ C:/Qt/6.11.1/mingw_64/include/QtWidgets/qbuttongroup.h \
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/dwmapi.h \
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/winapifamily.h \
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wtypes.h \

@@ -11,7 +11,8 @@
 	[
 		"C:/Qt Projects/VulkanEngine/models/helmet.obj",
 		"C:/Qt Projects/VulkanEngine/shader/triangle.frag.spv",
-		"C:/Qt Projects/VulkanEngine/shader/triangle.vert.spv"
+		"C:/Qt Projects/VulkanEngine/shader/triangle.vert.spv",
+		"C:/Qt Projects/VulkanEngine/shader/wireframe.frag.spv"
 	],
 	"LOCK_FILE" : "C:/Qt Projects/VulkanEngine/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/CMakeFiles/VulkanEngine_autogen.dir/AutoRcc_shader_EWIEGA46WW_Lock.lock",
 	"MULTI_CONFIG" : false,

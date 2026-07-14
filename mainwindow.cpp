@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QButtonGroup>
 #include <cmath>
 
 #ifdef Q_OS_WIN
@@ -34,6 +35,32 @@ MainWindow::MainWindow(VulkanWindow* vulkanWindow, QWidget* parent)
     qApp->installEventFilter(this);
 
     connect(ui->loadMeshBtn, &QPushButton::clicked, this, &MainWindow::onLoadMesh);
+
+    // Render-Mode-Buttons: exklusiv wie Radiobuttons, aber im Look von QPushButton
+    QButtonGroup* renderModeGroup = new QButtonGroup(this);
+    renderModeGroup->setExclusive(true);
+    renderModeGroup->addButton(ui->wireframeBtn);
+    renderModeGroup->addButton(ui->litBtn);
+    renderModeGroup->addButton(ui->texturedBtn);
+
+    connect(ui->wireframeBtn, &QPushButton::clicked, this, [this]() {
+        if (VulkanRenderer* r = m_vulkanWindow->renderer())
+            QMetaObject::invokeMethod(m_vulkanWindow, [r]() {
+                r->setRenderMode(VulkanRenderer::RenderMode::Wireframe);
+            }, Qt::QueuedConnection);
+    });
+    connect(ui->litBtn, &QPushButton::clicked, this, [this]() {
+        if (VulkanRenderer* r = m_vulkanWindow->renderer())
+            QMetaObject::invokeMethod(m_vulkanWindow, [r]() {
+                r->setRenderMode(VulkanRenderer::RenderMode::Lit);
+            }, Qt::QueuedConnection);
+    });
+    connect(ui->texturedBtn, &QPushButton::clicked, this, [this]() {
+        if (VulkanRenderer* r = m_vulkanWindow->renderer())
+            QMetaObject::invokeMethod(m_vulkanWindow, [r]() {
+                r->setRenderMode(VulkanRenderer::RenderMode::Textured);
+            }, Qt::QueuedConnection);
+    });
 
 #ifdef Q_OS_WIN
     // Dunkle Titelleiste, damit sie zum restlichen dunklen Theme passt (Windows 10 20H1+/11)

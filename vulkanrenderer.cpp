@@ -541,10 +541,17 @@ void VulkanRenderer::initResources() {
     dynamicState.dynamicStateCount = 2;
     dynamicState.pDynamicStates    = dynamicStates;
 
+    VkPushConstantRange pushConstantRange{};
+    pushConstantRange.stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
+    pushConstantRange.offset     = 0;
+    pushConstantRange.size       = sizeof(int32_t);
+
     VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-    pipelineLayoutInfo.sType          = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-    pipelineLayoutInfo.setLayoutCount = 1;
-    pipelineLayoutInfo.pSetLayouts    = &m_descSetLayout;
+    pipelineLayoutInfo.sType                  = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+    pipelineLayoutInfo.setLayoutCount         = 1;
+    pipelineLayoutInfo.pSetLayouts            = &m_descSetLayout;
+    pipelineLayoutInfo.pushConstantRangeCount = 1;
+    pipelineLayoutInfo.pPushConstantRanges    = &pushConstantRange;
     df->vkCreatePipelineLayout(m_window->device(), &pipelineLayoutInfo, nullptr, &m_pipelineLayout);
 
     VkGraphicsPipelineCreateInfo pipelineInfo{};
@@ -566,6 +573,34 @@ void VulkanRenderer::initResources() {
     df->vkDestroyShaderModule(m_window->device(), vertShader, nullptr);
     df->vkDestroyShaderModule(m_window->device(), fragShader, nullptr);
 
+    // Wireframe-Pipeline — gleicher Vertex-Shader, ein flacher Farb-Fragment-Shader,
+    // Polygon-Mode LINE statt FILL. Braucht das GPU-Feature "fillModeNonSolid",
+    // das in vulkanwindow.cpp per setEnabledFeaturesModifier() aktiviert wird.
+    VkShaderModule wireVertShader = createShaderModule(":/shader/triangle.vert.spv");
+    VkShaderModule wireFragShader = createShaderModule(":/shader/wireframe.frag.spv");
+
+    VkPipelineShaderStageCreateInfo wireStages[2]{};
+    wireStages[0].sType  = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+    wireStages[0].stage  = VK_SHADER_STAGE_VERTEX_BIT;
+    wireStages[0].module = wireVertShader;
+    wireStages[0].pName  = "main";
+    wireStages[1].sType  = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+    wireStages[1].stage  = VK_SHADER_STAGE_FRAGMENT_BIT;
+    wireStages[1].module = wireFragShader;
+    wireStages[1].pName  = "main";
+
+    VkPipelineRasterizationStateCreateInfo wireRasterizer = rasterizer;
+    wireRasterizer.polygonMode = VK_POLYGON_MODE_LINE;
+    wireRasterizer.cullMode    = VK_CULL_MODE_NONE;
+
+    VkGraphicsPipelineCreateInfo wirePipelineInfo = pipelineInfo;
+    wirePipelineInfo.pStages             = wireStages;
+    wirePipelineInfo.pRasterizationState = &wireRasterizer;
+    df->vkCreateGraphicsPipelines(m_window->device(), VK_NULL_HANDLE, 1, &wirePipelineInfo, nullptr, &m_wireframePipeline);
+
+    df->vkDestroyShaderModule(m_window->device(), wireVertShader, nullptr);
+    df->vkDestroyShaderModule(m_window->device(), wireFragShader, nullptr);
+
     qDebug("Pipeline mit Mesh erstellt");
 
     qDebug("Pipeline created");
@@ -577,6 +612,7 @@ void VulkanRenderer::releaseSwapChainResources() {}
 void VulkanRenderer::releaseResources() {
     auto* df = m_window->vulkanInstance()->deviceFunctions(m_window->device());
     if (m_pipeline)             df->vkDestroyPipeline(m_window->device(), m_pipeline, nullptr);
+    if (m_wireframePipeline)    df->vkDestroyPipeline(m_window->device(), m_wireframePipeline, nullptr);
     if (m_pipelineLayout)       df->vkDestroyPipelineLayout(m_window->device(), m_pipelineLayout, nullptr);
     if (m_descPool)             df->vkDestroyDescriptorPool(m_window->device(), m_descPool, nullptr);
     if (m_descSetLayout)        df->vkDestroyDescriptorSetLayout(m_window->device(), m_descSetLayout, nullptr);
@@ -608,13 +644,15 @@ void VulkanRenderer::startNextFrame() {
 
 
     float yaw, pitch, zoom, panX, panY;
+    RenderMode renderMode;
     {
         QMutexLocker lock(&m_mutex);
-        yaw   = m_yaw;
-        pitch = m_pitch;
-        zoom  = m_zoom;
-        panX  = m_panX;
-        panY  = m_panY;
+        yaw        = m_yaw;
+        pitch      = m_pitch;
+        zoom       = m_zoom;
+        panX       = m_panX;
+        panY       = m_panY;
+        renderMode = m_renderMode;
     }
 
     // Kamera-Basis (rechts/oben) aus der unverschobenen Blickrichtung ableiten,
@@ -671,7 +709,12 @@ void VulkanRenderer::startNextFrame() {
     rpBeginInfo.pClearValues    = clearValues;
 
     df->vkCmdBeginRenderPass(cb, &rpBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
-    df->vkCmdBindPipeline(cb, VK_PIPELINE_BIND_POINT_GRAPHICS, m_pipeline);
+
+    VkPipeline activePipeline = (renderMode == RenderMode::Wireframe) ? m_wireframePipeline : m_pipeline;
+    df->vkCmdBindPipeline(cb, VK_PIPELINE_BIND_POINT_GRAPHICS, activePipeline);
+
+    int32_t useTexture = (renderMode == RenderMode::Textured) ? 1 : 0;
+    df->vkCmdPushConstants(cb, m_pipelineLayout, VK_SHADER_STAGE_FRAGMENT_BIT, 0, sizeof(int32_t), &useTexture);
 
     VkViewport viewport{};
     viewport.width    = static_cast<float>(sz.width());
