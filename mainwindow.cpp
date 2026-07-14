@@ -8,6 +8,13 @@
 #include <QFileInfo>
 #include <cmath>
 
+#ifdef Q_OS_WIN
+#include <dwmapi.h>
+#ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
+#define DWMWA_USE_IMMERSIVE_DARK_MODE 20
+#endif
+#endif
+
 MainWindow::MainWindow(VulkanWindow* vulkanWindow, QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -27,6 +34,13 @@ MainWindow::MainWindow(VulkanWindow* vulkanWindow, QWidget* parent)
     qApp->installEventFilter(this);
 
     connect(ui->loadMeshBtn, &QPushButton::clicked, this, &MainWindow::onLoadMesh);
+
+#ifdef Q_OS_WIN
+    // Dunkle Titelleiste, damit sie zum restlichen dunklen Theme passt (Windows 10 20H1+/11)
+    BOOL useDarkMode = TRUE;
+    DwmSetWindowAttribute(reinterpret_cast<HWND>(winId()), DWMWA_USE_IMMERSIVE_DARK_MODE,
+                           &useDarkMode, sizeof(useDarkMode));
+#endif
 }
 
 MainWindow::~MainWindow()

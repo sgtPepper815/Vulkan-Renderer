@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -24,12 +26,14 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *renderView;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
+    QHBoxLayout *mainLayout;
+    QWidget *sidebar;
+    QVBoxLayout *sidebarLayout;
     QPushButton *loadMeshBtn;
     QPushButton *pushButton_2;
     QPushButton *pushButton;
+    QSpacerItem *sidebarSpacer;
+    QWidget *renderView;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -37,37 +41,60 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 600);
+        MainWindow->resize(900, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        renderView = new QWidget(centralwidget);
-        renderView->setObjectName("renderView");
-        renderView->setGeometry(QRect(99, 19, 691, 541));
-        verticalLayoutWidget = new QWidget(centralwidget);
-        verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(9, 9, 81, 271));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setObjectName("verticalLayout");
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        loadMeshBtn = new QPushButton(verticalLayoutWidget);
+        mainLayout = new QHBoxLayout(centralwidget);
+        mainLayout->setSpacing(12);
+        mainLayout->setObjectName("mainLayout");
+        mainLayout->setContentsMargins(12, 12, 12, 12);
+        sidebar = new QWidget(centralwidget);
+        sidebar->setObjectName("sidebar");
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(sidebar->sizePolicy().hasHeightForWidth());
+        sidebar->setSizePolicy(sizePolicy);
+        sidebar->setMinimumSize(QSize(180, 0));
+        sidebarLayout = new QVBoxLayout(sidebar);
+        sidebarLayout->setSpacing(8);
+        sidebarLayout->setObjectName("sidebarLayout");
+        loadMeshBtn = new QPushButton(sidebar);
         loadMeshBtn->setObjectName("loadMeshBtn");
 
-        verticalLayout->addWidget(loadMeshBtn);
+        sidebarLayout->addWidget(loadMeshBtn);
 
-        pushButton_2 = new QPushButton(verticalLayoutWidget);
+        pushButton_2 = new QPushButton(sidebar);
         pushButton_2->setObjectName("pushButton_2");
 
-        verticalLayout->addWidget(pushButton_2);
+        sidebarLayout->addWidget(pushButton_2);
 
-        pushButton = new QPushButton(verticalLayoutWidget);
+        pushButton = new QPushButton(sidebar);
         pushButton->setObjectName("pushButton");
 
-        verticalLayout->addWidget(pushButton);
+        sidebarLayout->addWidget(pushButton);
+
+        sidebarSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
+
+        sidebarLayout->addItem(sidebarSpacer);
+
+
+        mainLayout->addWidget(sidebar);
+
+        renderView = new QWidget(centralwidget);
+        renderView->setObjectName("renderView");
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
+        sizePolicy1.setHorizontalStretch(1);
+        sizePolicy1.setVerticalStretch(1);
+        sizePolicy1.setHeightForWidth(renderView->sizePolicy().hasHeightForWidth());
+        renderView->setSizePolicy(sizePolicy1);
+
+        mainLayout->addWidget(renderView);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 18));
+        menubar->setGeometry(QRect(0, 0, 900, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");

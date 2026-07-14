@@ -407,6 +407,12 @@ CMakeFiles/VulkanEngine.dir/main.cpp.obj: \
  C:/VulkanSDK/1.4.350.0/Include/vk_video/vulkan_video_codec_vp9std.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qversionnumber.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qtyperevision.h \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/QPalette \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/qpalette.h \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/qbrush.h \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/QColor \
+ C:/Qt/6.11.1/mingw_64/include/QtWidgets/QStyleFactory \
+ C:/Qt/6.11.1/mingw_64/include/QtWidgets/qstylefactory.h \
  C:\Qt\ Projects\VulkanEngine\mainwindow.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QMainWindow \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qmainwindow.h \
@@ -414,8 +420,6 @@ CMakeFiles/VulkanEngine.dir/main.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qaction.h \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qkeysequence.h \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qicon.h \
- C:/Qt/6.11.1/mingw_64/include/QtGui/qpalette.h \
- C:/Qt/6.11.1/mingw_64/include/QtGui/qbrush.h \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qfont.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qendian.h \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qfontmetrics.h \
