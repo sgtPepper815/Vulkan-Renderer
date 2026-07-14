@@ -2,8 +2,11 @@
 
 layout(location = 0) in vec3 fragNormal;
 layout(location = 1) in vec3 fragPos;
+layout(location = 2) in vec2 fragUv;
 
 layout(location = 0) out vec4 outColor;
+
+layout(binding = 1) uniform sampler2D texSampler;
 
 void main() {
     vec3 lightDir = normalize(vec3(1.0, 2.0, 3.0));
@@ -17,8 +20,8 @@ void main() {
     vec3  halfDir  = normalize(lightDir + viewDir);
     float specular = pow(max(dot(normal, halfDir), 0.0), 32.0);
 
-    vec3 color = vec3(0.7, 0.75, 0.8);  // Hellgrau
-    vec3 result = color * (ambient + diffuse) + vec3(1.0) * specular * 0.5;
+    vec3 texColor = texture(texSampler, fragUv).rgb;
+    vec3 result = texColor * (ambient + diffuse) + vec3(1.0) * specular * 0.5;
 
     outColor = vec4(result, 1.0);
 }

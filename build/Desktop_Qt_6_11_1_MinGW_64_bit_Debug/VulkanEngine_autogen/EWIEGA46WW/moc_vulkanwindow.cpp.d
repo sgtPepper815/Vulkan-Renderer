@@ -142,6 +142,7 @@ C:/Qt\ Projects/VulkanEngine/build/Desktop_Qt_6_11_1_MinGW_64_bit_Debug/VulkanEn
   C:/Qt/6.11.1/mingw_64/include/QtCore/qversiontagging.h \
   C:/Qt/6.11.1/mingw_64/include/QtCore/qxptype_traits.h \
   C:/Qt/6.11.1/mingw_64/include/QtCore/qyieldcpu.h \
+  C:/Qt/6.11.1/mingw_64/include/QtGui/QImage \
   C:/Qt/6.11.1/mingw_64/include/QtGui/QVulkanWindow \
   C:/Qt/6.11.1/mingw_64/include/QtGui/QVulkanWindowRenderer \
   C:/Qt/6.11.1/mingw_64/include/QtGui/qbitmap.h \

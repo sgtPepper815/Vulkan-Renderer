@@ -443,4 +443,5 @@ CMakeFiles/VulkanEngine.dir/main.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtGui/QVulkanWindowRenderer \
  C:/Qt/6.11.1/mingw_64/include/QtCore/QMutex \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qmutex.h \
- C:/Qt/6.11.1/mingw_64/include/QtCore/qtsan_impl.h
+ C:/Qt/6.11.1/mingw_64/include/QtCore/qtsan_impl.h \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/QImage

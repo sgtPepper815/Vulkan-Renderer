@@ -413,6 +413,7 @@ CMakeFiles/VulkanEngine.dir/vulkanrenderer.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtCore/QMutex \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qmutex.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qtsan_impl.h \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/QImage \
  C:/Qt/6.11.1/mingw_64/include/QtGui/QVulkanFunctions \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qvulkanfunctions.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/QFile \
@@ -450,4 +451,5 @@ CMakeFiles/VulkanEngine.dir/vulkanrenderer.cpp.obj: \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/fs_dir.h \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/fs_ops.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/QTextStream \
- C:/Qt/6.11.1/mingw_64/include/QtGui/QMatrix4x4
+ C:/Qt/6.11.1/mingw_64/include/QtGui/QMatrix4x4 \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/QVector3D

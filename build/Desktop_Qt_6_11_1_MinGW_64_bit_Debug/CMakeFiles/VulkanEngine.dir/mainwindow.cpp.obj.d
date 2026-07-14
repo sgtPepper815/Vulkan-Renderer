@@ -460,6 +460,7 @@ CMakeFiles/VulkanEngine.dir/mainwindow.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtCore/QMutex \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qmutex.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qtsan_impl.h \
+ C:/Qt/6.11.1/mingw_64/include/QtGui/QImage \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QVBoxLayout \
  C:/Qt/6.11.1/mingw_64/include/QtGui/QMouseEvent \
@@ -516,4 +517,5 @@ CMakeFiles/VulkanEngine.dir/mainwindow.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qfile.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qfileinfo.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qtimezone.h \
- C:/Qt/6.11.1/mingw_64/include/QtWidgets/qdialog.h
+ C:/Qt/6.11.1/mingw_64/include/QtWidgets/qdialog.h \
+ C:/Qt/6.11.1/mingw_64/include/QtCore/QFileInfo

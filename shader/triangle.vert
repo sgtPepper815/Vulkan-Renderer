@@ -2,9 +2,11 @@
 
 layout(location = 0) in vec3 inPos;
 layout(location = 1) in vec3 inNormal;
+layout(location = 2) in vec2 inUv;
 
 layout(location = 0) out vec3 fragNormal;
 layout(location = 1) out vec3 fragPos;
+layout(location = 2) out vec2 fragUv;
 
 layout(binding = 0) uniform UBO {
     mat4 mvp;
@@ -15,4 +17,5 @@ void main() {
     gl_Position = ubo.mvp * vec4(inPos, 1.0);
     fragNormal = mat3(ubo.model) * inNormal;
     fragPos    = vec3(ubo.model * vec4(inPos, 1.0));
+    fragUv     = inUv;
 }

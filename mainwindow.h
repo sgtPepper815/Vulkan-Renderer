@@ -21,10 +21,17 @@ private:
     VulkanWindow*   m_vulkanWindow;
     QWidget*        m_container;
     QPoint          m_lastMousePos;
+    bool            m_dragging = false;
     float           m_yaw   = 0.0f;
     float           m_pitch = 0.0f;
 
     float m_zoom = 5.0f;
+
+    // Pan (rechte Maustaste)
+    QPoint m_lastPanPos;
+    bool   m_panning = false;
+    float  m_panX = 0.0f;
+    float  m_panY = 0.0f;
 
     bool eventFilter(QObject* obj, QEvent* event);
 
